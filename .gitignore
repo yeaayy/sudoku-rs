@@ -1,0 +1,8 @@
+*
+!.gitignore
+!src
+!src/*/
+!src/**/*.rs
+!Cargo.lock
+!Cargo.toml
+!README.MD
