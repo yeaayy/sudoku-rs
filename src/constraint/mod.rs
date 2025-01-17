@@ -1,5 +1,6 @@
 mod list_generator;
 mod no_duplicate;
+mod no_consecutive;
 mod generator;
 
 pub use list_generator::{
@@ -15,6 +16,7 @@ pub use list_generator::{
 };
 
 pub use no_duplicate::NoDuplicate;
+pub use no_consecutive::NoConsecutive;
 
 pub use generator::{
   GGHorizontal,
