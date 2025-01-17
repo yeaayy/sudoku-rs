@@ -1,8 +1,8 @@
-
+#![allow(dead_code)]
 
 use std::{env::{self, Args}, error, io, usize};
 use sudoku::{Note, Rule, Sudoku};
-use constraint::NoDuplicateGenerator;
+use constraint::{ConstraintListGenerator, NoDuplicate};
 use rand::{thread_rng, seq::SliceRandom};
 
 mod sudoku;
@@ -35,8 +35,13 @@ fn generate<T: Note>(rule: &Rule<T>, remove_amount: f32) {
   {
     let mut solutions = vec![];
     s.solve_random(&mut solutions, 1);
-    s = solutions.pop().unwrap();
-    s.make_fixed();
+    if let Some(sol) = solutions.pop() {
+      s = sol;
+      s.make_fixed();
+    } else {
+      println!("No solution found");
+      return;
+    }
   }
 
   let mut list: Vec<usize> = (0 .. rule.size).collect();
@@ -86,10 +91,11 @@ fn main() {
     let size = width * height;
     let mut rule = Rule::<u16>::new(size, size, size.try_into().unwrap(), 1);
     rule.set_grid(width, height);
-    let mut nodup = NoDuplicateGenerator::new(&mut rule);
+
+    let mut nodup = ConstraintListGenerator::new(NoDuplicate::new(), &rule);
     nodup.add_standard_group(height, width, width, height, 0, 0);
     nodup.apply(&mut rule);
-  
+
     if cmd == "solve" {
       solve(&rule);
       return;

@@ -1,4 +1,10 @@
-use super::{GroupGenerator, NoDuplicateGenerator};
+
+use super::{
+  ConstraintList,
+  ConstraintListGenerator,
+  GroupGenerator,
+  super::sudoku::Note,
+};
 
 pub struct GGVertical {
   board_width: usize,
@@ -10,7 +16,9 @@ pub struct GGVertical {
 }
 
 impl GGVertical {
-  pub fn new(nd: &NoDuplicateGenerator, width: usize, height: usize, dx: usize, dy: usize) -> GGVertical {
+  pub fn new<T, N>(nd: &ConstraintListGenerator<T, N>, width: usize, height: usize, dx: usize, dy: usize) -> GGVertical
+  where T: ConstraintList<N>, N: Note
+  {
     GGVertical {
       board_width: nd.width,
       board_height: nd.height,
@@ -47,7 +55,9 @@ pub struct GGHorizontal {
 }
 
 impl GGHorizontal {
-  pub fn new(nd: &NoDuplicateGenerator, width: usize, height: usize, dx: usize, dy: usize) -> GGHorizontal {
+  pub fn new<T, N>(nd: &ConstraintListGenerator<T, N>, width: usize, height: usize, dx: usize, dy: usize) -> GGHorizontal
+  where T: ConstraintList<N>, N: Note
+  {
     GGHorizontal {
       board_width: nd.width,
       board_height: nd.height,
@@ -86,7 +96,9 @@ pub struct GGBlock {
 }
 
 impl GGBlock {
-  pub fn new(nd: &NoDuplicateGenerator, width: usize, height: usize, block_width: usize, block_height: usize, dx: usize, dy: usize) -> GGBlock {
+  pub fn new<T, N>(nd: &ConstraintListGenerator<T, N>, width: usize, height: usize, block_width: usize, block_height: usize, dx: usize, dy: usize) -> GGBlock
+  where T: ConstraintList<N>, N: Note
+  {
     GGBlock {
       board_width: nd.width,
       board_height: nd.height,

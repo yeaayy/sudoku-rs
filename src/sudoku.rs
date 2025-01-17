@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 
 use std::{cmp, fmt::{self, Display, Formatter}, fs::File, io::{self, BufReader, Read}, ops::{BitAnd, BitOr, Not, Shl, Shr}};
 use rand::{thread_rng, seq::SliceRandom};
